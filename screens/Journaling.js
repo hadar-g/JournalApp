@@ -5,8 +5,6 @@ import Header from '../components/Header'
 
 Journaling = props => {
 
-   
-
     const[text, setText] = useState()
 
     let spaces = /^\s*$/
@@ -24,7 +22,7 @@ Journaling = props => {
     return(
 <TouchableWithoutFeedback onPress = {() => {Keyboard.dismiss()}} >
     <View style = {styles.journal}>
-        <Header />
+        <Header currentJournal = {props.currentJournal}/>
             <TextInput 
             placeholder="Just Journal Your Thoughts Here..." 
             style = {styles.textInputStyle}
