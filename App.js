@@ -6,8 +6,7 @@ import Blurbs from './components/Blurbs'
 import Journaling from './screens/Journaling'
 import Entries from './screens/Entries'
 
-
-//var journalTexts = []
+import promptsJSON from './prompts.json'
 
 export default function App() {
 
@@ -21,6 +20,9 @@ export default function App() {
   const [mode, setMode] = useState(0)
   const [userText, setUserText] = useState('')
   const [amountOfJournalEntries, setAmountOfJournalEntries] = useState(0)
+  const [currentJournal, setCurrentJournal] = useState(0)
+
+  let prompt = "prompts" + currentJournal.toString()
 
   //When we hit the last blurb we throw this and increment mode to go to journal
   const blurbViewHandler = (blurbViewOver) => {
@@ -38,11 +40,13 @@ export default function App() {
   const goBackHomeHandler = (backHome) => {
     if(backHome){
       setMode(0)
+      setCurrentJournal(currentJournal + 1)
     }
   }
 
   const addJournalText = (journalText) => {
     setUserText(journalText)
+    promptsJSON.[prompt][1]  = journalText
     setAmountOfJournalEntries(amountOfJournalEntries + 1)
   }
   
@@ -53,7 +57,7 @@ export default function App() {
     content =  <Blurbs blurbViewOver = {blurbViewHandler}/>
     break;
   case 1:
-    content = <Journaling journalEntered = {journalEntryHandler} journalText = {addJournalText}/>
+    content = <Journaling journalEntered = {journalEntryHandler} journalText = {addJournalText} currentJournal = {currentJournal} />
     break;
   case 2: 
     content = <Entries backHome = {goBackHomeHandler} text = {userText} numEntries = {amountOfJournalEntries}/>
